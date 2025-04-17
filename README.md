@@ -1,6 +1,15 @@
 # CrossDex
 Official code for **"Cross-Embodiment Dexterous Grasping with Reinforcement Learning"** *(ICLR 2025)*
 
+<div align="center">
+
+[[Website]](https://sites.google.com/view/crossdex/)
+[[Paper]](https://openreview.net/forum?id=twIPSx9qHn) 
+[[Arxiv]](https://arxiv.org/abs/2410.02479)
+______________________________________________________________________
+![](assets/crossdex.png)
+</div>
+
 ## TODO List
 - [x] Code for processing eigengrasps and training retargeting networks.
 - [x] Code for embodiment randomization.
