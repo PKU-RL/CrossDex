@@ -7,9 +7,10 @@ Official code for **"Cross-Embodiment Dexterous Grasping with Reinforcement Lear
 - [x] Code for RL and DAgger.
 
 ## Requirements
-- `pip install -r requirements.txt`.
-- Install manopth according to [this](https://github.com/dexsuite/dex-retargeting/tree/main).
-- Install dex-retargeting: download our modified code [here](https://disk.pku.edu.cn/link/AA9B61370B3D64449C9502A721083A03D7) and unzip. `cd dex-retargeting & pip install -e .`. This code is developed upon [this](https://github.com/dexsuite/dex-retargeting/).
+- Use python 3.8.19. `pip install -r requirements.txt`.
+- Install [IsaacGym Preview 4](https://developer.nvidia.com/isaac-gym) and [IsaacGymEnvs](https://github.com/isaac-sim/IsaacGymEnvs).
+- Install [manopth](https://github.com/hassony2/manopth).
+- Install `dex-retargeting`: download our modified code [here](https://disk.pku.edu.cn/link/AA9B61370B3D64449C9502A721083A03D7) and unzip. `cd dex-retargeting & pip install -e .`. The code is developed on [this](https://github.com/dexsuite/dex-retargeting/).
 
 
 ## Eigengrasp
@@ -29,7 +30,7 @@ We use dexpilot to retarget Mano pose to dexterous hand joint angles. `cd retarg
 
 To accelerate batch computation for parallel RL training, we train retargeting neural networks. 
 - Download [GRAB dataset](https://github.com/otaheri/GRAB), place `s1.pkl`~`s10.pkl` files under `../GRAB/hand_dataset/`. Run `generate_dataset.py` to generate paired training data of 45-dim mano pose and X-dim robot pose. Dataset saved in `dataset/`. Use the option `--robot_name` to specify the robot hand.
-- Run `train_retartgeting_nn.py` to train the retargeting neural network. The checkpoint, config, tensorboard log will be saved in `models/`. Also use the option `--robot_name`.
+- Run `train_retartgeting_nn.py` to train the retargeting neural network. Use `--robot_name` to specify the hand. The checkpoint, config, tensorboard log will be saved in `models/`.
 - Run `vis_nn_retargeting.py` to qualitatively check the performance of the learned model.
 
 

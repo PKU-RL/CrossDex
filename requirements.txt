@@ -1,1 +1,5 @@
 opencv-python==4.3.0.36
+numpy==1.23.5
+sapien==3.0.0b0
+torch==2.3.0
+chumpy==0.70
