@@ -54,6 +54,8 @@ if __name__=='__main__':
         os.mkdir(output_dir)
 
     for fn in input_urdfs:
+        if not fn.endswith(".urdf"):
+            continue
         for i in range(N_per_robot):
             randomize_urdf(input_dir, fn, output_dir, save_dict, i)
 

@@ -4,12 +4,12 @@ Official code for **"Cross-Embodiment Dexterous Grasping with Reinforcement Lear
 ## TODO List
 - [x] Code for processing eigengrasps and training retargeting networks.
 - [x] Code for embodiment randomization.
-- [ ] Code for RL and DAgger.
+- [x] Code for RL and DAgger.
 
 ## Requirements
 - `pip install -r requirements.txt`.
 - Install manopth according to [this](https://github.com/dexsuite/dex-retargeting/tree/main).
-- Install dex-retargeting: `cd dex-retargeting & pip install -e .`. This codebase is developed upon [this](https://github.com/dexsuite/dex-retargeting/).
+- Install dex-retargeting: download our modified code [here](https://disk.pku.edu.cn/link/AA9B61370B3D64449C9502A721083A03D7) and unzip. `cd dex-retargeting & pip install -e .`. This code is developed upon [this](https://github.com/dexsuite/dex-retargeting/).
 
 
 ## Eigengrasp
@@ -25,31 +25,63 @@ Run `results/vis_pca_data.py` to control the 9-dim coordinates and visualize the
 
 
 ## Hand Retargeting
-We use dexpilot to retarget Mano pose to dexterous hand joint angles. `cd retargeting` and run `vis_eigengrasp_to_dexhand.py` to visualize Mano-to-all-hands retargeting.
+We use dexpilot to retarget Mano pose to dexterous hand joint angles. `cd retargeting` and run `vis_eigengrasp_to_dexhand.py` to visualize Mano-to-any-hand retargeting.
 
 To accelerate batch computation for parallel RL training, we train retargeting neural networks. 
 - Download [GRAB dataset](https://github.com/otaheri/GRAB), place `s1.pkl`~`s10.pkl` files under `../GRAB/hand_dataset/`. Run `generate_dataset.py` to generate paired training data of 45-dim mano pose and X-dim robot pose. Dataset saved in `dataset/`. Use the option `--robot_name` to specify the robot hand.
 - Run `train_retartgeting_nn.py` to train the retargeting neural network. The checkpoint, config, tensorboard log will be saved in `models/`. Also use the option `--robot_name`.
 - Run `vis_nn_retargeting.py` to qualitatively check the performance of the learned model.
 
-After that, we can use the class `retargeting_nn_utils.EigenRetargetModel` to do retargeting.
 
 ## Policy Learning
 
-### Add Robot Randomization
-In `robot_randomization/`, run `create_random_robots.py` to randomize the xyz offsets of the hand-arm mounting joint, generating 20 variants for each robot.
+### Use Robot Randomization
+- Download meshes [here](https://disk.pku.edu.cn/link/AAA584F3CC72AB4A74BEDC4D68615B158D) and unzip. Move the folder `meshes` to `robot_randomization/`.
+- In `robot_randomization/`, run `create_random_robots.py` to randomize the xyz offsets of the hand-arm mounting joint, generating 20 variants for each robot.
 
-### Cross-Embodiment training 
-(coming soon)
+### Cross-Embodiment Reinforcement Learning
 
-`cd rl/`, follow the scripts in `run.sh` to run the experiment with randomized robots.
+- Download YCB objects [here](https://disk.pku.edu.cn/link/AAC33CED76112A416E8DE404631C05A9C3), unzip it, and move the folder `ycb_assets` to `assets/`.
 
-We implement parallel environment for multiple robots in `tasks_crossdex/multi_dex_grasp.py`. The config file in `tasks_crossdex/task/MultiDexGrasp.yaml`.
-- Action space: 6-dim arm dofs + 9-dim eigengrasp space, using pre-trained NNs to retarget to each robot's dof targets.
-- Observation space: arm dof pos + keypoints pos (palm + first 4 ordered fingers) + object pose + last act.
+- `cd rl/`, follow the scripts in `run.sh` to train a state-based policy on four types of hands for one object. For example, run 
+```
+python run_ppo_multidex.py \
+num_envs=8192 \
+task=MultiDexGrasp \
+train.params.max_iterations=40000 \
+task.env.observationType="armdof+keypts+objpose+lastact" \
+task.env.asset.objectAssetFile="ycb_assets/urdf/077_rubiks_cube.urdf" \
+task.env.randomizeRobot=True 
+```
 
 ### Vision-Based Distillation 
-(coming soon)
+- Generate config file for expert policies: `cd rl/`. Assuming checkpoint directories for all objects are placed under `runs_multidex/`, run `python generate_expert_yaml.py --path runs_multidex`. The generated config file is `expert.yaml`, its format should be:
+```
+004_sugar_box:
+  ckpt: model_40000.pt
+  path: runs_multidex/004_sugar_box_2024-09-03_11-40-07
+005_tomato_soup_can:
+  ckpt: model_40000.pt
+  path: runs_multidex/005_tomato_soup_can_2024-09-03_11-40-28
+......
+```
+Move `expert.yaml` to `tasks_crossdex/expert/`.
+- Follow the scripts in `run.sh` to train on four types of hands for all objects. For example, run 
+```
+python run_dagger_multidex.py \
+num_envs=16384 \
+task=MultiDexGrasp \
+train=MultiDexGraspDAGGER \
+task.env.enablePointCloud=True \
+task.env.observationType="armdof+keypts+objpose+lastact" \
+task.env.studentObservationType="armdof+keypts+lastact+objpcl" \
+task.env.multiTask=True \
+task.env.multiTaskLabel="no" \
+task.env.asset.objectAssetDir="ycb_assets/urdf" \
+expert=expert \
+train.params.max_iterations=20000 \
+task.env.randomizeRobot=True 
+```
 
 ## Citation
 ```bibtex

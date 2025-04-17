@@ -1,0 +1,135 @@
+004_sugar_box:
+  ckpt: model_40000.pt
+  path: runs_multidex/004_sugar_box_2024-09-03_11-40-07
+005_tomato_soup_can:
+  ckpt: model_40000.pt
+  path: runs_multidex/005_tomato_soup_can_2024-09-03_11-40-28
+006_mustard_bottle:
+  ckpt: model_40000.pt
+  path: runs_multidex/006_mustard_bottle_2024-09-03_11-40-48
+010_potted_meat_can:
+  ckpt: model_40000.pt
+  path: runs_multidex/010_potted_meat_can_2024-09-03_11-41-13
+011_banana:
+  ckpt: model_40000.pt
+  path: runs_multidex/011_banana_2024-09-03_11-41-32
+013_apple:
+  ckpt: model_40000.pt
+  path: runs_multidex/013_apple_2024-09-03_11-41-48
+014_lemon:
+  ckpt: model_40000.pt
+  path: runs_multidex/014_lemon_2024-09-03_11-42-11
+015_peach:
+  ckpt: model_40000.pt
+  path: runs_multidex/015_peach_2024-09-03_11-42-37
+016_pear:
+  ckpt: model_40000.pt
+  path: runs_multidex/016_pear_2024-09-03_11-43-52
+017_orange:
+  ckpt: model_40000.pt
+  path: runs_multidex/017_orange_2024-09-03_11-44-12
+018_plum:
+  ckpt: model_40000.pt
+  path: runs_multidex/018_plum_2024-09-03_11-44-27
+025_mug:
+  ckpt: model_40000.pt
+  path: runs_multidex/025_mug_2024-09-03_11-44-47
+028_skillet_lid:
+  ckpt: model_40000.pt
+  path: runs_multidex/028_skillet_lid_2024-09-03_11-45-06
+030_fork:
+  ckpt: model_40000.pt
+  path: runs_multidex/030_fork_2024-09-03_11-45-23
+031_spoon:
+  ckpt: model_40000.pt
+  path: runs_multidex/031_spoon_2024-09-03_11-45-42
+032_knife:
+  ckpt: model_40000.pt
+  path: runs_multidex/032_knife_2024-09-03_11-46-03
+033_spatula:
+  ckpt: model_26000.pt
+  path: runs_multidex/033_spatula_2024-09-03_11-46-53
+035_power_drill:
+  ckpt: model_40000.pt
+  path: runs_multidex/035_power_drill_2024-09-03_11-47-09
+037_scissors:
+  ckpt: model_40000.pt
+  path: runs_multidex/037_scissors_2024-09-03_11-47-32
+040_large_marker:
+  ckpt: model_40000.pt
+  path: runs_multidex/040_large_marker_2024-09-03_11-47-47
+043_phillips_screwdriver:
+  ckpt: model_40000.pt
+  path: runs_multidex/043_phillips_screwdriver_2024-09-03_11-48-06
+044_flat_screwdriver:
+  ckpt: model_40000.pt
+  path: runs_multidex/044_flat_screwdriver_2024-09-03_11-48-26
+048_hammer:
+  ckpt: model_40000.pt
+  path: runs_multidex/048_hammer_2024-09-03_11-48-44
+051_large_clamp:
+  ckpt: model_40000.pt
+  path: runs_multidex/051_large_clamp_2024-09-03_11-49-04
+052_extra_large_clamp:
+  ckpt: model_40000.pt
+  path: runs_multidex/052_extra_large_clamp_2024-09-03_11-50-04
+054_softball:
+  ckpt: model_40000.pt
+  path: runs_multidex/054_softball_2024-09-03_11-50-24
+055_baseball:
+  ckpt: model_40000.pt
+  path: runs_multidex/055_baseball_2024-09-03_11-50-44
+056_tennis_ball:
+  ckpt: model_40000.pt
+  path: runs_multidex/056_tennis_ball_2024-09-03_11-51-05
+057_racquetball:
+  ckpt: model_40000.pt
+  path: runs_multidex/057_racquetball_2024-09-03_11-51-23
+061_foam_brick:
+  ckpt: model_40000.pt
+  path: runs_multidex/061_foam_brick_2024-09-03_11-51-41
+063-a_marbles:
+  ckpt: model_40000.pt
+  path: runs_multidex/063-a_marbles_2024-09-03_11-52-03
+065-a_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-a_cups_2024-09-03_11-52-25
+065-b_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-b_cups_2024-09-03_11-53-04
+065-c_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-c_cups_2024-09-03_11-53-19
+065-d_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-d_cups_2024-09-03_11-53-33
+065-e_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-e_cups_2024-09-03_11-53-51
+065-f_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-f_cups_2024-09-03_11-54-09
+065-g_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-g_cups_2024-09-03_11-54-30
+065-h_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-h_cups_2024-09-03_11-54-43
+065-i_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-i_cups_2024-09-03_11-55-01
+065-j_cups:
+  ckpt: model_40000.pt
+  path: runs_multidex/065-j_cups_2024-09-03_11-55-59
+071_nine_hole_peg_test:
+  ckpt: model_40000.pt
+  path: runs_multidex/071_nine_hole_peg_test_2024-09-03_11-56-15
+072-b_toy_airplane:
+  ckpt: model_40000.pt
+  path: runs_multidex/072-b_toy_airplane_2024-09-03_11-56-32
+073-g_lego_duplo:
+  ckpt: model_40000.pt
+  path: runs_multidex/073-g_lego_duplo_2024-09-03_11-56-49
+077_rubiks_cube:
+  ckpt: model_40000.pt
+  path: runs_multidex/077_rubiks_cube_2024-09-03_11-57-05

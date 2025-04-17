@@ -1,0 +1,7 @@
+cup:
+  path: 'runs_multidex/randrobot-xyz-obs-cup-08-19'
+  ckpt: 'model_20000.pt'
+alarmclock:
+  path: 'runs_multidex/randrobot-xyz-obs-alarmclock-08-27'
+  ckpt: 'model_20000.pt'
+

@@ -1,0 +1,278 @@
+# used to create the object
+name: MultiDexGrasp
+
+physics_engine: ${..physics_engine}
+is_test: ${..test}
+
+# embodiment choose
+multi_dex:
+  hand_names: ["shadow_hand", "allegro_hand", "ability_hand", "schunk_svh_hand"]
+  dataset: "grab" # which dataset to train retargeting NN
+  add_random_dataset: False # is the trained dataset mixed with random eigengrasps?
+  retargeting_type: "dexpilot"
+  n_eigenvecs: 9
+
+hand_specific:
+  leap_hand:
+    robot_name: "rm65_leap_right"
+    onehot: [1,0,0,0,0,0]
+    robot_asset_file: "urdf_origin/rm65_leap_right.urdf"
+    palm_link: "base" #"palm_lower"
+    fingertips_link: ["thumb_tip_head", "index_tip_head", "middle_tip_head", "ring_tip_head"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 22
+  shadow_hand:
+    robot_name: "rm65_shadow_right"
+    onehot: [0,1,0,0,0,0]
+    robot_asset_file: "urdf_origin/rm65_shadow_right.urdf"
+    palm_link: "ee_link"
+    fingertips_link: ["thtip", "fftip", "mftip", "rftip", "lftip"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 28
+  allegro_hand:
+    robot_name: "rm65_allegro_right"
+    onehot: [0,0,1,0,0,0]
+    robot_asset_file: "urdf_origin/rm65_allegro_right.urdf"
+    palm_link: "wrist"
+    fingertips_link: ["link_15.0_tip", "link_3.0_tip", "link_7.0_tip", "link_11.0_tip"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 22
+  ability_hand:
+    robot_name: "rm65_ability_right"
+    onehot: [0,0,0,1,0,0]
+    robot_asset_file: "urdf_origin/rm65_ability_right.urdf"
+    palm_link: "base"
+    fingertips_link: ["thumb_tip", "index_tip", "middle_tip", "ring_tip", "pinky_tip"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 16
+  schunk_svh_hand:
+    robot_name: "rm65_svh_right"
+    onehot: [0,0,0,0,1,0]
+    robot_asset_file: "urdf_origin/rm65_svh_right.urdf"
+    palm_link: "right_hand_base_link"
+    fingertips_link: ["thtip", "fftip", "mftip", "rftip", "lftip"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 26
+  inspire_hand:
+    robot_name: "rm65_inspire_right"
+    onehot: [0,0,0,0,0,1]
+    robot_asset_file: "urdf_origin/rm65_inspire_right.urdf"
+    palm_link: "base"
+    fingertips_link: ["thumb_tip",  "index_tip", "middle_tip", "ring_tip", "pinky_tip"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 18
+  barrett_hand:
+    robot_name: "rm65_barrett_right"
+    onehot: [0,0,0,0,0,-1]
+    robot_asset_file: "urdf_origin/rm65_barrett_right.urdf"
+    palm_link: "base_link"
+    fingertips_link: ["finger_3_tip", "finger_1_tip", "finger_2_tip"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 8
+  dclaw_gripper:
+    robot_name: "rm65_dclaw_right"
+    onehot: [0,0,0,0,-1,0]
+    robot_asset_file: "urdf_origin/rm65_dclaw_right.urdf"
+    palm_link: "base"
+    fingertips_link: ["link_f3_head", "link_f2_head", "link_f1_head"]
+    palm_offset: [0.0, 0.0, 0.05]
+    numActions: 9
+
+
+
+# if given, will override the device setting in gym.
+env: 
+  numEnvs: ${resolve_default:16384,${...num_envs}}
+  envSpacing: 1.2
+  episodeLength: 300
+  enableDebugVis: False
+  aggregateMode: 1
+  useRobotVhacd: False # detailed hand-arm shapes, but slow
+  useObjectVhacd: True # should be true
+
+  clipObservations: 5.0
+  clipActions: 1.0
+
+  # stiffnessScale: 1.0
+  # forceLimitScale: 1.0
+  useRelativeControl: False
+  armController: "qpos" # can be "ik" or "qpos" 
+  dofSpeedScale: 20.0 # for relative control: +-1*scale*dt
+  actionsMovingAverage: 0.1
+  controlFrequencyInv: 1 # 60 Hz
+
+  startPositionNoise: 0.01
+  startRotationNoise: 0.0
+
+  resetPositionNoise: 0.01
+  resetRotationNoise: 0.0
+  resetDofPosRandomInterval: 0.2
+  resetDofVelRandomInterval: 0.0
+
+  # Random forces applied to the object
+  forceScale: 0.0
+  forceProbRange: [0.001, 0.1]
+  forceDecay: 0.99
+  forceDecayInterval: 0.08
+
+  # reward -> dictionary
+  reward_function: "v2"
+  #distRewardScale: 0.5
+  #actionPenaltyScale: -0.0002
+
+  # point cloud configs
+  point_cloud:
+    max_points_per_object: 4096 # loaded pcl
+    points_per_object: 512 # sample pcl
+    n_resample_steps: 32 # how many steps to resample pcl?
+
+  num_obs_dict:
+    "armdof": 6
+    "keypts": 15 # palm + 4 fingers
+    "lastact": 15
+    "objpose": 7
+    "onehotrobot": 6 # distinguish different robots
+    "robotranddata": 3 # robot randomization data
+    "onehottask": 6 # 55 objects in grab dataset; 47 in YCB dataset
+    "objpcl": 1536 # object point cloud, 512*3
+  enablePointCloud: False
+  observationType: "armdof+keypts+objpose+lastact" # elements separated with +
+  studentObservationType: "armdof+keypts+lastact+objpcl"
+  #asymmetric_observations: False
+  successTolerance: 0.05
+  #printNumSuccesses: False
+  maxConsecutiveSuccesses: 0
+
+  # forced lift in test: after the object is lifted, keep the arm-hand action
+  test_forced_lift: 
+    apply: True
+    #arm_dof_pos: [0.,0.,0.,0.,0.,0.]
+    n_lift_steps: 30
+
+  multiTask: False
+  multiTaskLabel: "onehot" # no, onehot
+  randomizeRobot: False # do some embodiment randomization
+  randomizeRobotAssetRoot: "../robot_randomization/urdf_rand_xyz"
+  asset:
+    robotAssetRoot: "../robot_randomization"
+    assetRoot: "../assets"
+    objectAssetFile: "obj/urdf/cup.urdf" #"ycb_assets/urdf/065-a_cups.urdf" # single-task training object
+    objectAssetDir: "ycb_assets/urdf" # multi-task training objects
+  
+  # set to True if you use camera sensors in the environment
+  enableCameraSensors: False
+
+task:
+  randomize: False
+  randomization_params:
+    frequency: 720   # Define how many simulation steps between generating new randomizations
+    observations:
+      range: [0, .002] # range for the white noise
+      range_correlated: [0, .001] # range for correlated noise, refreshed with freq `frequency`
+      operation: "additive"
+      distribution: "gaussian"
+      # schedule: "linear"   # "constant" is to turn on noise after `schedule_steps` num steps
+      # schedule_steps: 40000
+    actions:
+      range: [0., .05]
+      range_correlated: [0, .015] # range for correlated noise, refreshed with freq `frequency`
+      operation: "additive"
+      distribution: "gaussian"
+      # schedule: "linear"  # "linear" will linearly interpolate between no rand and max rand
+      # schedule_steps: 40000
+    sim_params: 
+      gravity:
+        range: [0, 0.4]
+        operation: "additive"
+        distribution: "gaussian"
+        # schedule: "linear"  # "linear" will linearly interpolate between no rand and max rand
+        # schedule_steps: 40000
+    actor_params:
+      hand:
+        color: True
+        dof_properties:
+          damping: 
+            range: [0.3, 3.0]
+            operation: "scaling"
+            distribution: "loguniform"
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+          stiffness: 
+            range: [0.75, 1.5]
+            operation: "scaling"
+            distribution: "loguniform"
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+          lower:
+            range: [0, 0.01]
+            operation: "additive"
+            distribution: "gaussian"
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+          upper:
+            range: [0, 0.01]
+            operation: "additive"
+            distribution: "gaussian"
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+        rigid_body_properties:
+          mass: 
+            range: [0.5, 1.5]
+            operation: "scaling"
+            distribution: "uniform"
+            setup_only: True # Property will only be randomized once before simulation is started. See Domain Randomization Documentation for more info.
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+        rigid_shape_properties:
+          friction: 
+            num_buckets: 250
+            range: [0.7, 1.3]
+            operation: "scaling"
+            distribution: "uniform"
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+      object:
+        scale:
+          range: [0.95, 1.05]
+          operation: "scaling"
+          distribution: "uniform"
+          setup_only: True # Property will only be randomized once before simulation is started. See Domain Randomization Documentation for more info.
+          # schedule: "linear"  # "linear" will scale the current random sample by ``min(current num steps, schedule_steps) / schedule_steps`
+          # schedule_steps: 30000
+        rigid_body_properties:
+          mass: 
+            range: [0.5, 1.5]
+            operation: "scaling"
+            distribution: "uniform"
+            setup_only: True # Property will only be randomized once before simulation is started. See Domain Randomization Documentation for more info.
+            # schedule: "linear"  # "linear" will scale the current random sample by ``min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+        rigid_shape_properties:
+          friction:
+            num_buckets: 250
+            range: [0.7, 1.3]
+            operation: "scaling"
+            distribution: "uniform"
+            # schedule: "linear"  # "linear" will scale the current random sample by `min(current num steps, schedule_steps) / schedule_steps`
+            # schedule_steps: 30000
+
+sim:
+  dt: 0.01667 # 1/60
+  substeps: 2
+  up_axis: "z"
+  use_gpu_pipeline: ${eq:${...pipeline},"gpu"}
+  gravity: [0.0, 0.0, -9.81]
+  physx:
+    num_threads: ${....num_threads}
+    solver_type: ${....solver_type}
+    use_gpu: ${contains:"cuda",${....sim_device}} # set to False to run on CPU
+    num_position_iterations: 8
+    num_velocity_iterations: 0
+    max_gpu_contact_pairs: 8388608 # 8*1024*1024
+    num_subscenes: ${....num_subscenes}
+    contact_offset: 0.002
+    rest_offset: 0.0
+    bounce_threshold_velocity: 0.2 
+    max_depenetration_velocity: 1000.0
+    default_buffer_size_multiplier: 5.0
+    contact_collection: 0 # 0: CC_NEVER (don't collect contact info), 1: CC_LAST_SUBSTEP (collect only contacts on last substep), 2: CC_ALL_SUBSTEPS (broken - do not use!)

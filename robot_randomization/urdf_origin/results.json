@@ -1,0 +1,42 @@
+{
+    "rm65_inspire_right.urdf": {
+        "x": 0.05,
+        "y": 0.0,
+        "z": 0.017
+    },
+    "rm65_ability_right.urdf": {
+        "x": 0.035,
+        "y": 0.0,
+        "z": 0.02
+    },
+    "rm65_shadow_right.urdf": {
+        "x": 0.04,
+        "y": 0.0,
+        "z": 0.015
+    },
+    "rm65_svh_right.urdf": {
+        "x": 0.055,
+        "y": 0.002,
+        "z": 0.028
+    },
+    "rm65_leap_right.urdf": {
+        "x": 0.035,
+        "y": -0.01,
+        "z": 0.012
+    },
+    "rm65_allegro_right.urdf": {
+        "x": -0.045,
+        "y": 0.002,
+        "z": 0.03
+    },
+    "rm65_barrett_right": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "rm65_dclaw_right": {
+        "x": 0,
+        "y": 0,
+        "z": 0.007
+    }
+}

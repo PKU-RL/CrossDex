@@ -1,2 +1,7 @@
 retargeting/models/*
 *__pycache__*
+robot_randomization/meshes
+robot_randomization/urdf_rand_xyz
+assets/ycb_assets
+*.zip
+rl/runs_*
