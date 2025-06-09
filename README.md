@@ -38,7 +38,7 @@ Run `results/vis_pca_data.py` to control the 9-dim coordinates and visualize the
 We use dexpilot to retarget Mano pose to dexterous hand joint angles. `cd retargeting` and run `vis_eigengrasp_to_dexhand.py` to visualize Mano-to-any-hand retargeting.
 
 To accelerate batch computation for parallel RL training, we train retargeting neural networks. 
-- Download [GRAB dataset](https://github.com/otaheri/GRAB), place `s1.pkl`~`s10.pkl` files under `../GRAB/hand_dataset/`. Run `generate_dataset.py` to generate paired training data of 45-dim mano pose and X-dim robot pose. Dataset saved in `dataset/`. Use the option `--robot_name` to specify the robot hand.
+- Download [GRAB dataset](https://disk.pku.edu.cn/link/AA47085B8394F54A7C862530F4100077C5), place `s1.pkl`~`s10.pkl` files under `../GRAB/hand_dataset/`. Run `generate_dataset.py` to generate paired training data of 45-dim mano pose and X-dim robot pose. Dataset saved in `dataset/`. Use the option `--robot_name` to specify the robot hand.
 - Run `train_retartgeting_nn.py` to train the retargeting neural network. Use `--robot_name` to specify the hand. The checkpoint, config, tensorboard log will be saved in `models/`.
 - Run `vis_nn_retargeting.py` to qualitatively check the performance of the learned model.
 
