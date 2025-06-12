@@ -19,11 +19,11 @@ ______________________________________________________________________
 - Use python 3.8.19. `pip install -r requirements.txt`.
 - Install [IsaacGym Preview 4](https://developer.nvidia.com/isaac-gym) and [IsaacGymEnvs](https://github.com/isaac-sim/IsaacGymEnvs).
 - Install [manopth](https://github.com/hassony2/manopth).
-- Install `dex-retargeting`: download our modified code [here](https://disk.pku.edu.cn/link/AA9B61370B3D64449C9502A721083A03D7) and unzip. `cd dex-retargeting & pip install -e .`. The code is developed on [this](https://github.com/dexsuite/dex-retargeting/).
+- Install `dex-retargeting`: download our modified code [dex-retargeting.zip](https://drive.google.com/drive/folders/1I32LoFB8x_Kw6z6AQkyg1KhkJyGnBybZ?usp=drive_link) and unzip. `cd dex-retargeting & pip install -e .`. The code is developed on [this codebase](https://github.com/dexsuite/dex-retargeting/).
 
 
 ## Eigengrasp
-Files `results/pca_$N_grab.pkl` are eigengrasps with $N PCA eigen vectors from the [GRAB dataset](https://github.com/otaheri/GRAB). Data format in each .pkl is:
+Files `results/pca_$N_grab.pkl` are eigengrasps with $N PCA eigen vectors processed from the [GRAB dataset](https://github.com/otaheri/GRAB). Data format in each .pkl is:
 ```
 'eigen_vectors': (N,45) numpy array, the eigengrasps corresponding to 45-dim finger axis-angles in Mano
 'min_values': (N,) numpy array, min values on each axis
@@ -38,7 +38,7 @@ Run `results/vis_pca_data.py` to control the 9-dim coordinates and visualize the
 We use dexpilot to retarget Mano pose to dexterous hand joint angles. `cd retargeting` and run `vis_eigengrasp_to_dexhand.py` to visualize Mano-to-any-hand retargeting.
 
 To accelerate batch computation for parallel RL training, we train retargeting neural networks. 
-- Download [GRAB dataset](https://disk.pku.edu.cn/link/AA47085B8394F54A7C862530F4100077C5), place `s1.pkl`~`s10.pkl` files under `../GRAB/hand_dataset/`. Run `generate_dataset.py` to generate paired training data of 45-dim mano pose and X-dim robot pose. Dataset saved in `dataset/`. Use the option `--robot_name` to specify the robot hand.
+- Download GRAB dataset files [GRAB.zip](https://drive.google.com/drive/folders/1I32LoFB8x_Kw6z6AQkyg1KhkJyGnBybZ?usp=drive_link), place `s1.pkl`~`s10.pkl` files under `GRAB/hand_dataset/`. Run `generate_dataset.py` to generate paired training data of 45-dim mano pose and X-dim robot pose. Dataset saved in `dataset/`. Use the option `--robot_name` to specify the robot hand.
 - Run `train_retartgeting_nn.py` to train the retargeting neural network. Use `--robot_name` to specify the hand. The checkpoint, config, tensorboard log will be saved in `models/`.
 - Run `vis_nn_retargeting.py` to qualitatively check the performance of the learned model.
 
@@ -46,12 +46,12 @@ To accelerate batch computation for parallel RL training, we train retargeting n
 ## Policy Learning
 
 ### Use Robot Randomization
-- Download meshes [here](https://disk.pku.edu.cn/link/AAA584F3CC72AB4A74BEDC4D68615B158D) and unzip. Move the folder `meshes` to `robot_randomization/`.
+- Download meshes [meshes.zip](https://drive.google.com/drive/folders/1I32LoFB8x_Kw6z6AQkyg1KhkJyGnBybZ?usp=drive_link) and unzip. Move the folder `meshes` to `robot_randomization/`.
 - In `robot_randomization/`, run `create_random_robots.py` to randomize the xyz offsets of the hand-arm mounting joint, generating 20 variants for each robot.
 
 ### Cross-Embodiment Reinforcement Learning
 
-- Download YCB objects [here](https://disk.pku.edu.cn/link/AAC33CED76112A416E8DE404631C05A9C3), unzip it, and move the folder `ycb_assets` to `assets/`.
+- Download YCB objects [ycb_assets.zip](https://drive.google.com/drive/folders/1I32LoFB8x_Kw6z6AQkyg1KhkJyGnBybZ?usp=drive_link), unzip it, and move the folder `ycb_assets` to `assets/`.
 
 - `cd rl/`, follow the scripts in `run.sh` to train a state-based policy on four types of hands for one object. For example, run 
 ```
